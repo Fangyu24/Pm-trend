@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import axios from "axios";
 import * as bootstrap from "bootstrap";
-import "./assets/style.css";
+import Pagination from "../../component/Pagination";
+import ProductModal from "../../component/ProductModal";
+import useMessage from '../../hooks/useMessage';
 
-import ProductModal from './component/ProductModal';
-import Pagination from './component/Pagination';
-import Login from './views/back/Login';
 
 
 
@@ -29,24 +28,25 @@ const INITIAL_TEMPLATE_DATA = {
 
 
 
-function App2() {
-  
-  const [isAuth, setIsAuth] = useState(false);
+function AdminProduct() {
   const [products, setProducts] = useState([]);
   const [templateProduct, setTemplateProduct] = useState(INITIAL_TEMPLATE_DATA);
   const [modalType, setModalType] = useState("")
   const [pagination, setPagination] = useState({})
   const productModalRef = useRef(null);
+  const {showError, showSuccess}=useMessage();
 
   const getProducts = async (page = 1) => {
     try {
       const res = await axios.get(`${API_BASE}/api/${API_PATH}/admin/products?page=${page}`);
       setProducts(res.data.products);
       setPagination(res.data.pagination);
+      showSuccess("取得成功")
 
     } catch (err) {
-      console.log(err.response
-      )
+      console.log(err.response);
+      // dispatch(createAsyncMessage(err.response.data));
+      showError(err.response.data.message);
     }
 
   }
@@ -68,7 +68,6 @@ function App2() {
       try {
         const res = await axios.post(`${API_BASE}/api/user/check`)
         console.log(res.data)
-        setIsAuth(true);
         getProducts();
       } catch (error) {
         console.log(error.response)
@@ -93,8 +92,7 @@ function App2() {
 
   return (
     <>
-      {
-        !isAuth ? (<Login getProducts={getProducts} setIsAuth={setIsAuth} />) : <div className='container'>
+        <div className='container'>
           <div className="mt-2">
             <h2>產品列表</h2>
             <div className="text-end mt-4">
@@ -137,8 +135,6 @@ function App2() {
           </div>
         </div>
 
-      }
-
       <ProductModal modalType={modalType}
         templateProduct={templateProduct}
         getProducts={getProducts}
@@ -147,4 +143,4 @@ function App2() {
   )
 }
 
-export default App2
+export default AdminProduct

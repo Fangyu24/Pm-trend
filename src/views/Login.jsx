@@ -1,11 +1,14 @@
 import axios from "axios"
 import { useForm } from 'react-hook-form';
-import { emailValidation } from "../../utilty/validation";
+import { emailValidation } from "../utilty/validation";
+import { useNavigate } from "react-router";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
 
-function Login({setIsAuth}){
+function Login(){
+
+  const navigate= useNavigate();
 
 const {
   register,
@@ -28,13 +31,13 @@ const {
       document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
       // eslint-disable-next-line react-hooks/immutability
       axios.defaults.headers.common['Authorization'] = token;
-
-      setIsAuth(true);
+      navigate('/admin/product')
+      // setIsAuth(true);
       // getProducts();
     }
     catch (error) {
       console.log(error.response);
-      setIsAuth(false)
+      // setIsAuth(false)
     }
   }
 

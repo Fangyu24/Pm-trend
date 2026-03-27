@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { createAsyncMessage } from "../slice/messageSlice";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -11,6 +13,7 @@ function ProductModal({ modalType,
   closeModal,
 }) {
 const[tempData, setTempData]=useState(templateProduct);
+const dispatch=useDispatch()
 
 
 useEffect(()=>{
@@ -36,6 +39,7 @@ const updateProduct = async (id) => {
   }
   try {
     const res = await axios[method](url, productData);
+    dispatch(createAsyncMessage(res.data))
     getProducts();
     closeModal();
 
