@@ -31,3 +31,14 @@ img {
 .images {
   height: 150px;
 }
+
+.company-logo {
+  width: 100px;      
+  height: auto;        
+  display: block; 
+  margin-left: auto;  
+}
+
+.box{
+  height: 500px;
+}
