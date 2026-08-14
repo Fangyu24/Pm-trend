@@ -1,7 +1,6 @@
-import { createHashRouter } from "react-router-dom";
+import { createHashRouter} from "react-router-dom";
 import Home from "./views/front/Home";
 import Execution from "./views/front/Execution";
-import SingleProduct from "./views/front/SingleProduct";
 import Marketing from "./views/front/Marketing";
 import Notfound from "./views/front/Notfound";
 import FrontendLayout from "./layout/FrontendLayout";
@@ -11,10 +10,14 @@ import NewMember from "./views/front/NewMember";
 import Login from "./views/Login";
 import AdminLayout from "./layout/AdminLayout";
 import AdminProduct from "./views/Admin/AdminProduct";
-import AdminOrder from "./views/Admin/AdminOrder";
 import ProtectedRoute from "./component/ProtectedRoute";
 import Regulation from "./views/front/Regulation";
-
+import AdminExecution from './views/Admin/AdminExecution';
+import AdminMarketing from "./views/Admin/AdminMarketing";
+import AdminFinance from "./views/Admin/AdminFinance";
+import AdminSales from "./views/Admin/AdminSales";
+import AdminNewmember from "./views/Admin/AdminNewmember";
+import AdminHome from "./views/Admin/AdminHome";
 
 
 export const router= createHashRouter(
@@ -31,10 +34,6 @@ export const router= createHashRouter(
                     path:"execution",
                     element:<Execution/>
                 },
-                // {
-                //     path:"product/:id",
-                //     element:<SingleProduct/>
-                // },
                 {
                     path:"marketing",
                     element:<Marketing/>
@@ -62,20 +61,44 @@ export const router= createHashRouter(
             ]
         },
         {
-            path:"admin",
-            element:<ProtectedRoute><AdminLayout/></ProtectedRoute>,
-            children:[
-                {
-                    path:"product",
-                    element:<AdminProduct/>,
-                },
-                {
-                    path:"order",
-                    element:<AdminOrder/>
-                }
-            ]
-
-        },
+            path: "admin",
+            element: (
+            //   <ProtectedRoute>
+                <AdminLayout />
+            //   </ProtectedRoute>
+            ),
+            children: [
+              // 設定進入 /admin 時預設顯示的頁面（也可以用 Navigate 重導向）
+              {
+                index: true,
+                element: <AdminHome/>,
+              },
+              {
+                path: "product",
+                element: <AdminProduct />,
+              },
+              {
+                path: "execution",
+                element: <AdminExecution />,
+              },
+              {
+                path: "finance",
+                element: <AdminFinance />,
+              },
+              {
+                path: "marketing",
+                element: <AdminMarketing />,
+              },
+              {
+                path: "sales",
+                element: <AdminSales />,
+              },
+              {
+                path: "newmember",
+                element: <AdminNewmember />,
+              },
+            ],
+          },
         {
             path:"*",
             element:<Notfound/>

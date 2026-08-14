@@ -118,7 +118,7 @@ const Sales = () => {
 
     return (<div className="container">
         <div className="row mt-3">
-        <h2>業務網紅專區</h2>
+        <h2 className="mb-3">業務網紅專區</h2>
         {SalesData.Data?.map((item, index) => (
             <div key={index} className="col-4 mb-2 d-flex align-items-stretch ">
                 <div className="card w-100">
@@ -140,7 +140,7 @@ const Sales = () => {
         ))}
         </div>
         <div className="row mt-3"> 
-            <h2>報價專區</h2>
+            <h2 className="mb-3">報價專區</h2>
         {SalesData.Price?.map((item, index) => (
             <div key={index} className="col-4 mb-2 d-flex align-items-stretch">
                 <div className="card w-100">
