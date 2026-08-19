@@ -118,7 +118,7 @@ const Marketing = ({ isAdmin = false }) => {
                         <p className="card-text">{item.notice}</p>
                         <button
                             type="button"
-                            className="btn btn-primary mt-auto"
+                            className="btn btn-primary mt-auto bg-hover"
                             onClick={(e) => {
                                 e.stopPropagation(); // 防止外層事件冒泡攔截
                                 window.open(`${item.Link}`, '_blank', 'noopener,noreferrer');

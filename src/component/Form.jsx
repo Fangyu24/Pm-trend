@@ -112,10 +112,9 @@ export default function Form({ apiEndpoint, onSuccess }) {
       <button
         type="submit"
         disabled={submitting}
+        className='bg-primary text-light'
         style={{
           padding: '10px 20px',
-          backgroundColor: submitting ? '#999' : '#007bff',
-          color: '#fff',
           border: 'none',
           borderRadius: '4px',
           cursor: submitting ? 'not-allowed' : 'pointer',

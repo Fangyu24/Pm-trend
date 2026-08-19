@@ -9,7 +9,7 @@ const AdminExecution = () => {
       {/* 上半部：直接呈現前台的內容 */}
 
       <Execution isAdmin={true} />
-      <div className="container">
+      <div className="container mb-5">
       <section className="border-top mt-5 d-flex flex-column justify-content-center align-items-center">
         <h3 className='mt-5 mb-5'>新增執行相關資料</h3>
         <Form apiEndpoint={`${API_BASE}Execution`} />

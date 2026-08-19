@@ -58,7 +58,7 @@ const Execution = ({ isAdmin = false }) => {
                                 
                                 <button
                                     type="button"
-                                    className="btn btn-primary mt-auto"
+                                    className="btn btn-primary mt-auto bg-hover"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         window.open(`${item.Link}`, '_blank', 'noopener,noreferrer');

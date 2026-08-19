@@ -4,7 +4,6 @@ import { RotatingSquare } from "react-loader-spinner";
 import { Navigate } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
-const API_PATH = import.meta.env.VITE_API_PATH;
 
 function ProtectedRoute({children}){
 

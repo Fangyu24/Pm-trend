@@ -1,3 +1,20 @@
-@import 'bootstrap/scss/bootstrap';
 @import 'bootstrap/scss/functions';
 @import './variables';
+@import 'bootstrap/scss/bootstrap';
+
+@import './pages/regulation';
+
+
+.text-primary-hover {
+    color: $primary;
+    &:hover {
+        color: $primary-50;
+    }
+};
+
+.bg-hover{
+ background-color:$primary;
+ &:hover{
+    background-color: $primary-50;
+ }
+}

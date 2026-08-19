@@ -1,16 +1,16 @@
-import Marketing from '../front/Marketing';
+import Price from '../front/Price';
 import Form from '../../component/Form';
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 
-const AdminMarketing = () => {
+const AdminPrice = () => {
   return (
     <div>
-      <Marketing isAdmin={true} />
+      <Price isAdmin={true} />
       <div className="container mb-5">
       <section className="border-top mt-5 d-flex flex-column justify-content-center align-items-center">
-        <h3 className='mt-5 mb-5'>新增企劃相關資料</h3>
-        <Form apiEndpoint={`${API_BASE}Marketing`} />
+        <h3 className='mt-5 mb-5'>新增報價單</h3>
+        <Form apiEndpoint={`${API_BASE}Sales_Price`} />
       </section>
       </div>
     </div>
@@ -18,4 +18,4 @@ const AdminMarketing = () => {
   );
 }
 
-export default AdminMarketing;
+export default AdminPrice;
