@@ -1,32 +1,9 @@
 import { Link, Outlet, NavLink,Navigate } from "react-router-dom"
-import { useAuth } from '../hooks/useAuth';
+// import { useAuth } from '../hooks/useAuth';
 import companyLogo from '../assets/images/companyLogo.png';
 import '../assets/style.css';
 
 function AdminLayout() {
-    const { user, isAdmin, loading } = useAuth();
-
-    // 1. 還在確認身分與 Firestore 角色時，顯示載入狀態
-  if (loading) {
-    return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">驗證權限中...</span>
-        </div>
-      </div>
-    );
-  }
-
-  // 2. 未登入：強行導回登入頁
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  // 3. 已登入但角色不是 admin：阻擋進入後台，導回一般員工入口 (/front)
-  if (!isAdmin) {
-    alert("存取拒絕：您沒有管理者後台的權限！");
-    return <Navigate to="/front" replace />;
-  }
 
 
     return <div className="d-flex flex-column min-vh-100">

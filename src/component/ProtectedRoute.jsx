@@ -1,43 +1,29 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { Navigate, Outlet } from "react-router";
 import { RotatingSquare } from "react-loader-spinner";
-import { Navigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth"; // 👈 從原本的 hook 引入
 
-const API_BASE = import.meta.env.VITE_API_BASE;
+function ProtectedRoute({ children, requireAdmin = false }) {
+  const { user, isAdmin, loading } = useAuth(); // 👈 完美搭配原本的變數名稱！
 
-function ProtectedRoute({children}){
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <RotatingSquare visible={true} height="100" width="100" color="#004e7a" />
+      </div>
+    );
+  }
 
-    const [isAuth, setIsAuth]=useState(false);
-    const [loading, setLoading]=useState(true);
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
-    useEffect(() => {
-        const token = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("hexToken="))
-          ?.split("=")[1];
-        //如果有取得token才把它加到headers上
-        if (token) {
-          axios.defaults.headers.common['Authorization'] = token;
-        }
-        
-        const checkLogin = async () => {
-          try {
-            const res = await axios.post(`${API_BASE}/api/user/check`)
-            console.log(res.data)
-            setIsAuth(true)
-          } catch (error) {
-            console.log(error.response)
-          }finally{
-            setLoading(false)
-          }
-        };
-        checkLogin()
-      }, [])
+  if (requireAdmin && !isAdmin) {
+    alert("恭喜登入！");
+    return <Navigate to="/home" replace />;
+  }
 
-      if(loading)return<RotatingSquare/>
-      if(!isAuth)return <Navigate to="/login"/>
-
-    return children;
+  // 💡 如果有傳入 children（後台包法）就渲染 children；若沒有（前台嵌套包法）就渲染 Outlet
+  return children ? children : <Outlet />;
 }
 
-export default ProtectedRoute
+export default ProtectedRoute;

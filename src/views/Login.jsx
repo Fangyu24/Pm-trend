@@ -24,7 +24,7 @@ function Login() {
 
   const checkUserPermission = async (user) => {
     try {
-      const userRef = doc(db, 'users', user.email);
+      const userRef = doc(db, 'user', user.email);
       const docSnap = await getDoc(userRef);
 
       // 如果 Firestore 沒有這個人的紀錄，代表不是公司授權員工
@@ -36,7 +36,7 @@ function Login() {
 
       return true; // 已授權
     } catch (error) {
-      console.error("檢查權限失敗：", error);
+      console.error("檢查權限詳細失敗原因：", error.code, error.message);
       alert("檢查帳號權限時發生錯誤，請稍後再試。");
       await auth.signOut();
       return false;
@@ -58,8 +58,8 @@ function Login() {
       const hasPermission = await checkUserPermission(user);
 
       if (hasPermission) {
-        console.log("登入成功且具備授權：", user.email);
-        navigate('/admin');
+        console.log("登入成功：", user.email);
+        navigate('/home');
       }
     } catch (error) {
       console.error("Firebase 登入失敗：", error.code, error.message);
@@ -158,100 +158,3 @@ function Login() {
 }
 
 export default Login;
-// import axios from "axios"
-// import { useForm } from 'react-hook-form';
-// import { emailValidation } from "../utilty/validation";
-// import { useNavigate } from "react-router";
-
-// const API_BASE = import.meta.env.VITE_API_BASE;
-
-// function Login(){
-
-//   const navigate= useNavigate();
-
-// const {
-//   register,
-//   handleSubmit,
-//   formState:{errors, isValid},
-// } = useForm({
-//   mode:"onChange",
-//   defaultValues:{
-//     username: "",
-//     password: ""
-//   }
-// })
-
-//   const onSubmit = async (formData) => {
-//     try {
-//       // e.preventDefault();
-//       const response = await axios.post(`${API_BASE}/admin/signin`, formData);
-//       const { token, expired } = response.data
-//       // eslint-disable-next-line react-hooks/immutability
-//       document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
-//       // eslint-disable-next-line react-hooks/immutability
-//       axios.defaults.headers.common['Authorization'] = token;
-//       navigate('/admin/product')
-//       // setIsAuth(true);
-//       // getProducts();
-//     }
-//     catch (error) {
-//       console.log(error.response);
-//       // setIsAuth(false)
-//     }
-//   }
-
-//     return(<div className="container login">
-//         <form className="form-floating" onSubmit={handleSubmit(onSubmit)}>
-//           <h1>請先登入</h1>
-//           <div className="form-floating mb-3">
-//             <input
-//               type="email"
-//               className="form-control"
-//               name="username"
-//               placeholder="name@example.com"
-//               {...register("username",emailValidation
-//               )}
-//               // value={formData.username}
-//               // onChange={(e) => handleInputChange(e)} 
-//               />
-//             <label htmlFor="username">Email address</label>
-//             {
-//               errors.username&&(
-//                 <p className='text-danger'>{errors.username.message}</p>
-//               )
-//             }
-//           </div>
-//           <div className="form-floating">
-//             <input
-//               type="password"
-//               className="form-control"
-//               name="password"
-//               placeholder="Password"
-//               // value={formData.password}
-//               // onChange={(e) => handleInputChange(e)} 
-//               {...register("password",{
-//                 required:"請輸入密碼",
-//                 minLength: {
-//                   value: 6,
-//                   message: "密碼長度至少需 6 碼",
-//                 },
-//               })}
-//               />
-//             <label htmlFor="Password">Password</label>
-//             {
-//               errors.password&&(
-//                 <p className='text-danger'>{errors.password.message}</p>
-//               )
-//             }
-//           </div>
-//           <button type="submit" className="btn btn-primary w-100 mt-2" 
-//           disabled={!isValid}
-//           >登入</button>
-
-//         </form>
-//       </div>
-
-//     )
-// }
-
-// export default Login

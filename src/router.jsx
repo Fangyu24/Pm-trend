@@ -1,4 +1,4 @@
-import { createHashRouter } from "react-router-dom";
+import { createHashRouter, Navigate } from "react-router-dom";
 import Home from "./views/front/Home";
 import Execution from "./views/front/Execution";
 import Marketing from "./views/front/Marketing";
@@ -33,55 +33,63 @@ export const router = createHashRouter(
       children: [
         {
           index: true,
-          element: <Home />
-        },
-        {
-          path: "execution",
-          element: <Execution />
-        },
-        {
-          path: "marketing",
-          element: <Marketing />
-        },
-        {
-          path: "sales",
-          element: <Sales />
-        },
-        {
-          path: "finance",
-          element: <Finance />
-        },
-        {
-          path: "newMember",
-          element: <NewMember />
-        },
-        {
-          path: "outsideLink",
-          element: <OutsideLink />
-        },
-        {
-          path: "price",
-          element: <Price/>
-        },
-        {
-          path: "regulation",
-          element: <Regulation />
+          element: <Navigate to="login" replace /> 
         },
         {
           path: "login",
           element: <Login />
+        },
+        {
+          element:<ProtectedRoute />,
+          children: [
+            {
+              path: "home", 
+              element: <Home />
+            },
+            {
+              path: "execution",
+              element: <Execution />
+            },
+            {
+              path: "marketing",
+              element: <Marketing />
+            },
+            {
+              path: "sales",
+              element: <Sales />
+            },
+            {
+              path: "finance",
+              element: <Finance />
+            },
+            {
+              path: "newMember",
+              element: <NewMember />
+            },
+            {
+              path: "outsideLink",
+              element: <OutsideLink />
+            },
+            {
+              path: "price",
+              element: <Price/>
+            },
+            {
+              path: "regulation",
+              element: <Regulation />
+            }
+          ]
         }
       ]
     },
     {
       path: "admin",
       element: (
-        //   <ProtectedRoute>
-        <AdminLayout />
-        //   </ProtectedRoute>
+        <ProtectedRoute requireAdmin={true}>
+          <AdminLayout />
+        </ProtectedRoute>
       ),
       children: [
-        // 設定進入 /admin 時預設顯示的頁面（也可以用 Navigate 重導向）
         {
           index: true,
           element: <AdminHome />,
@@ -122,7 +130,6 @@ export const router = createHashRouter(
           path: "regulation",
           element: <AdminRegulation />,
         }
-        
       ],
     },
     {
